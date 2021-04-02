@@ -98,3 +98,29 @@ class UpdateEmployee(APIView):
         obj = self.get_Object(id)
         obj.delete()
         return Response({"response": "Employee is successfully deleted!"})
+
+#Basic django auth code
+from django.contrib.auth.forms import UserCreationForm
+@csrf_exempt
+@api_view(["GET", "POST"])
+def authenticateIndex(request):
+    return render(request, 'authIndex.html')
+
+from django.contrib.auth import login, authenticate
+from django.shortcuts import redirect
+@csrf_exempt
+@api_view(["GET", "POST"])
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password1"]
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('authenticateIndex')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'registration/register.html', context={'form':form})
