@@ -14,6 +14,7 @@ from rest_framework.response import Response
 #Serializer
 from .serializer import EmployeeSerializer
 
+
 # Create your views here.
 @csrf_exempt
 @api_view(["GET"])
