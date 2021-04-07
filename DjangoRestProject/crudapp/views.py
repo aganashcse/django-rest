@@ -32,7 +32,10 @@ def EmployeeDetails(request):
         return JsonResponse(data)
 
 # class ListEmployee(View): - this is old one before using APIView wrapper
+# for jwt:
+from rest_framework.permissions import IsAuthenticated
 class ListEmployee(APIView):
+    permission_classes = (IsAuthenticated, ) # this line of code needed to add jwt authentication
 
     # You need to decorate the dispatch method for csrf_exempt to work. 
     # What it does is set an csrf_exempt attribute on the view function itself to True, 
@@ -125,3 +128,22 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, 'registration/register.html', context={'form':form})
+
+
+
+# for other kindof rest framework UI & jwt:
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+
+class ListEmployeeRest(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, ) # this line of code needed to add jwt authentication
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+#email (gmail)
+from django.core.mail import send_mail
+
+def send_email(request):
+    #dummy recipeint emails can be generated from https://temp-mail.org/en
+    send_mail("hello from ganesh", "hi, this is an automated msg", 'aganashcse@gmail.com', ['migeg23971@0pppp.com'], fail_silently=False)
+    return JsonResponse({"response":"email sent!"})

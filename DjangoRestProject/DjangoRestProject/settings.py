@@ -124,3 +124,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "/"
+
+REST_FRAMEWORK = { 
+    # 'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.isAuthenticated', ),
+    'DEFAULT_AUTHENTICATION_CLASSES' : ('rest_framework_simplejwt.authentication.JWTAuthentication',) }
+
+
+
+#gmail:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'aganashcse@gmail.com'
+#app password can be generated in gmail->Manage your Google account->Security->App passwords->Generate->login
+EMAIL_HOST_PASSWORD = 'ewsqouczkhxubwiy' #paste the key or app password here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'default from email'
