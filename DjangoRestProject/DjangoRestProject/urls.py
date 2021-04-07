@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from crudapp.views import EmployeeDetails, ListEmployee, UpdateEmployee, authenticateIndex, register
+from crudapp.views import EmployeeDetails, ListEmployee, UpdateEmployee, authenticateIndex, register, ListEmployeeRest, send_email
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework import routers
 
+# for rest_framework UI like swagger:
+router = routers.DefaultRouter()
+router.register('listEmployees', ListEmployeeRest)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('employeedetails/', EmployeeDetails),
@@ -26,5 +31,10 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     #urls for authentication(login, register)
     path('', authenticateIndex, name="authenticateIndex"), #for login
-    path('register', register, name="register") # for basic django user registration
+    path('register', register, name="register"), # for basic django user registration
+    #for jwt token authentication
+    path('api/token/', TokenObtainPairView.as_view()),
+    path('api/token/view/', TokenRefreshView.as_view()),
+    path('router/', include(router.urls)),
+    path('sendEmail', send_email, name="send gmail")
 ]
