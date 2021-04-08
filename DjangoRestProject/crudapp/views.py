@@ -147,3 +147,18 @@ def send_email(request):
     #dummy recipeint emails can be generated from https://temp-mail.org/en
     send_mail("hello from ganesh", "hi, this is an automated msg", 'aganashcse@gmail.com', ['migeg23971@0pppp.com'], fail_silently=False)
     return JsonResponse({"response":"email sent!"})
+
+#code for twilio sms
+from twilio.rest import Client
+from django.conf import settings
+from django.http import HttpResponse
+def broadcast_sms(request):
+    message_to_broadcast = ("Have you played the incredible TwilioQuest "
+                                                "yet? Grab it here: Ganesh")
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    for recipient in settings.SMS_BROADCAST_TO_NUMBERS:
+        if recipient:
+            client.messages.create(to=recipient,
+                                   from_=settings.TWILIO_NUMBER,
+                                   body=message_to_broadcast)
+    return HttpResponse("messages sent!", 200)

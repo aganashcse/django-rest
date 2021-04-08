@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from crudapp.views import EmployeeDetails, ListEmployee, UpdateEmployee, authenticateIndex, register, ListEmployeeRest, send_email
+from crudapp.views import EmployeeDetails, ListEmployee, UpdateEmployee, authenticateIndex, register, ListEmployeeRest, send_email, broadcast_sms
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework import routers
 
@@ -35,6 +35,9 @@ urlpatterns = [
     #for jwt token authentication
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/view/', TokenRefreshView.as_view()),
+    #for mail(gmail)
     path('router/', include(router.urls)),
-    path('sendEmail', send_email, name="send gmail")
+    path('sendEmail', send_email, name="send gmail"),
+    #for twilio sms
+    path('sendsms', broadcast_sms, name="send sms"),
 ]

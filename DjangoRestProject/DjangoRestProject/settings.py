@@ -141,8 +141,20 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'default from email'
 
+#code for Twilio
+# import os
+# TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+# TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+# TWILIO_NUMBER = os.getenv("TWILIO_NUMBER")
+SMS_BROADCAST_TO_NUMBERS = [ 
+    "+917339468280", # use the format +19735551234
+    "", 
+    "", 
+]
 
-
+TWILIO_ACCOUNT_SID = "AC2e2d0f1b0ee0b2e111abab4570c98659"
+TWILIO_AUTH_TOKEN = "a1050464fc7d8f8f219983e5f8a757a5"
+TWILIO_NUMBER = "+12566733887"
 
 
 
